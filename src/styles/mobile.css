@@ -1,0 +1,78 @@
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 760px) {
+  .record {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .record-player {
+    justify-self: stretch;
+  }
+
+  .candle {
+    width: 11px;
+    height: 54px;
+  }
+
+  .candle::after {
+    content: "";
+    position: absolute;
+    inset: -22px -6px 0;
+  }
+
+  .cake-plate {
+    width: 104%;
+    margin-left: -2%;
+  }
+
+  .wish-list li {
+    width: 100%;
+    border-radius: var(--radius-md);
+    padding: 0.7rem 1rem 0.7rem 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .wish-list li::before {
+    width: 1.9rem;
+    height: 1.9rem;
+  }
+
+  .letter-card {
+    box-shadow: 8px 8px 0 var(--pink);
+    transform: rotate(-0.6deg);
+  }
+
+  .wish {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .song-frame {
+    box-shadow: 6px 6px 0 var(--pink);
+  }
+
+  .voice-card {
+    box-shadow: 6px 6px 0 var(--lime);
+    transform: rotate(-0.6deg);
+  }
+
+  .voice-wave {
+    height: 28px;
+    gap: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

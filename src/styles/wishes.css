@@ -1,0 +1,47 @@
+/* ==================== DESEOS ==================== */
+
+.wish-list {
+  list-style: none;
+  counter-reset: wish;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.wish-list li {
+  counter-increment: wish;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1.3rem 0.8rem 0.8rem;
+  border-radius: 999px;
+  background: var(--night-soft);
+  border: 2px solid var(--wish-color);
+  font-weight: 500;
+  transition: transform 250ms var(--ease-bounce);
+}
+
+.wish-list li::before {
+  content: counter(wish);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--wish-color);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.wish-list li:hover {
+  transform: scale(1.05) rotate(-1deg);
+}
+
+.wish-list li:nth-child(4n + 1) { --wish-color: var(--lime); }
+.wish-list li:nth-child(4n + 2) { --wish-color: var(--pink); }
+.wish-list li:nth-child(4n + 3) { --wish-color: var(--sky); }
+.wish-list li:nth-child(4n) { --wish-color: var(--purple); }

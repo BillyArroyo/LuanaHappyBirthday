@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Luana cumple 13</title>
+  <meta name="description" content="Una página de cumpleaños hecha especialmente para Luana Reichel en sus 13 años.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Shrikhand&display=swap" rel="stylesheet">
+</head>
+<body class="is-locked">
+  <div class="intro" id="intro">
+    <div class="intro-scene" aria-hidden="true"></div>
+    <div class="intro-person intro-person--invitado" aria-hidden="true">
+      <img src="/src/photos/intro/invitado.jpg" alt="">
+    </div>
+    <div class="intro-person intro-person--zed" aria-hidden="true">
+      <img src="/src/photos/intro/zed.jpg" alt="">
+      <p class="kiss-bubble">¡Muack! Feliz cumple, Luana</p>
+      <span class="kiss" style="--k: 0; --rot: -18deg">💋</span>
+      <span class="kiss" style="--k: 1; --rot: 12deg">💚</span>
+      <span class="kiss" style="--k: 2; --rot: -6deg">💋</span>
+      <span class="kiss" style="--k: 3; --rot: 20deg">💗</span>
+    </div>
+    <div class="intro-content">
+      <div class="gift" aria-hidden="true">
+        <span class="gift-lid"></span>
+        <span class="gift-box"></span>
+      </div>
+      <p class="intro-kicker">Luana, tienes una sorpresa</p>
+      <button class="btn btn--lime" type="button" id="open-gift">Abrir mi regalo</button>
+    </div>
+  </div>
+
+  <div class="sky" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="birds" aria-hidden="true">
+      <svg class="bird bird--1" viewBox="0 0 60 24"><path d="M2 14 Q16 0 30 14 Q44 0 58 14 Q44 7 30 20 Q16 7 2 14Z"/></svg>
+      <svg class="bird bird--2" viewBox="0 0 60 24"><path d="M2 14 Q16 0 30 14 Q44 0 58 14 Q44 7 30 20 Q16 7 2 14Z"/></svg>
+      <svg class="bird bird--3" viewBox="0 0 60 24"><path d="M2 14 Q16 0 30 14 Q44 0 58 14 Q44 7 30 20 Q16 7 2 14Z"/></svg>
+    </div>
+
+    <div class="opening" id="opening"></div>
+
+    <div class="opening-title">
+      <figure class="hero-portrait" id="hero-portrait" hidden>
+        <img alt="Luana" id="hero-portrait-image">
+      </figure>
+      <div class="title-copy">
+        <p class="hero-kicker">Capítulo 13 · Edición especial</p>
+        <h1 class="hero-title">
+          <span class="hero-name" id="hero-name"></span>
+          <span class="hero-name hero-name--second" id="hero-second-name"></span>
+        </h1>
+        <p class="hero-surname" id="hero-surname"></p>
+      </div>
+      <div class="burst" aria-label="13 años">
+        <span class="burst-number" id="hero-age"></span>
+        <span class="burst-label">años</span>
+      </div>
+    </div>
+
+    <a class="btn btn--lime hero-cta" href="#zombies">Mira quién te escribió</a>
+  </header>
+
+  <main>
+    <section class="block voice reveal" id="mensaje-voz" aria-labelledby="voice-title" hidden>
+      <div class="voice-card">
+        <button class="voice-play" type="button" id="voice-play" aria-label="Reproducir mensaje">
+          <span class="voice-icon" aria-hidden="true"></span>
+        </button>
+        <div class="voice-body">
+          <p class="voice-kicker">Mensaje de voz para ti</p>
+          <h2 id="voice-title" class="voice-title"></h2>
+          <div class="voice-wave" aria-hidden="true"></div>
+          <input class="voice-progress" id="voice-progress" type="range" min="0" max="100" step="0.1" value="0" aria-label="Avance del mensaje">
+          <p class="voice-time"><span id="voice-current">0:00</span> / <span id="voice-duration">0:00</span></p>
+        </div>
+      </div>
+      <audio id="voice-audio" preload="metadata"></audio>
+    </section>
+
+    <section class="block song-favorite reveal" id="cancion" aria-labelledby="song-title" hidden>
+      <p class="song-kicker">Tu canción favorita ♪</p>
+      <h2 class="song-title" id="song-title"></h2>
+      <p class="song-artist" id="song-artist"></p>
+      <div class="song-frame">
+        <div id="song-player"></div>
+      </div>
+      <a class="btn btn--small btn--ghost song-link" id="song-link" target="_blank" rel="noopener">Abrir en YouTube</a>
+    </section>
+
+    <div id="chapters"></div>
+
+    <section id="pastel" class="block cake-section reveal" aria-labelledby="cake-title">
+      <h2 id="cake-title" class="section-title">Sopla tus 13 velas</h2>
+      <p class="section-lead" id="cake-status" aria-live="polite">Toca cada vela para apagarla.</p>
+
+      <div class="cake">
+        <div class="candles" id="candles"></div>
+        <div class="cake-layer cake-layer--top"></div>
+        <div class="cake-layer cake-layer--middle"></div>
+        <div class="cake-layer cake-layer--bottom"></div>
+        <div class="cake-plate"></div>
+      </div>
+
+      <div class="wish" id="wish" hidden>
+        <p class="wish-title">¡Pide tu deseo!</p>
+        <p>Que estos 13 vengan llenos de música, risas y aventuras.</p>
+        <button class="btn btn--ghost" type="button" id="relight">Encender otra vez</button>
+      </div>
+    </section>
+
+    <section class="block wishes reveal" aria-labelledby="wishes-title">
+      <h2 id="wishes-title" class="section-title">13 deseos para tus 13</h2>
+      <ol class="wish-list" id="wish-list"></ol>
+    </section>
+
+    <section class="block gallery-section reveal" id="luana-gallery" aria-labelledby="luana-gallery-title" hidden>
+      <h2 id="luana-gallery-title" class="section-title">Tus mejores momentos</h2>
+      <div class="gallery" data-gallery></div>
+    </section>
+
+    <section class="block family reveal" id="mis-reinas" aria-labelledby="family-title" hidden>
+      <p class="family-crown" aria-hidden="true">♛</p>
+      <h2 id="family-title" class="section-title family-title"></h2>
+      <p class="section-lead family-lead" id="family-lead"></p>
+      <div class="family-collage" id="family-collage"></div>
+      <div class="family-promise">
+        <span class="family-heart" aria-hidden="true">♥</span>
+        <p class="family-promise-text" id="family-promise"></p>
+        <p class="family-signature" id="family-signature"></p>
+      </div>
+    </section>
+
+    <section class="block letter reveal" aria-labelledby="letter-title">
+      <article class="letter-card">
+        <h2 id="letter-title" class="letter-title"></h2>
+        <div id="letter-body"></div>
+        <p class="letter-sign">Con mucho cariño,<br><strong id="letter-signature"></strong></p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Hecho con cariño para Luana · 2026</p>
+    <details class="credits" id="credits" hidden>
+      <summary>Créditos de las fotos</summary>
+      <ul id="credits-list"></ul>
+    </details>
+  </footer>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Fondo de pantalla">
+    <img class="lightbox-image" id="lightbox-image" alt="">
+    <div class="lightbox-actions">
+      <button class="btn btn--small btn--ghost" type="button" data-lightbox="prev" aria-label="Anterior">←</button>
+      <a class="btn btn--small btn--lime" id="lightbox-download" download>Descargar</a>
+      <button class="btn btn--small btn--ghost" type="button" data-lightbox="next" aria-label="Siguiente">→</button>
+      <button class="btn btn--small" type="button" data-lightbox="close">Cerrar</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
