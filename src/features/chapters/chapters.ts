@@ -1,8 +1,9 @@
-import { namedPhoto, numberedPhotos } from '../../config/localMedia';
+import { namedAudio, namedPhoto, numberedPhotos } from '../../config/localMedia';
 import type { Speaker, World, WorldSong } from '../../config/types';
 import { createElement, requireElement } from '../../core/dom';
 import { renderGallery } from '../gallery/gallery';
 import type { Lightbox } from '../lightbox/lightbox';
+import { createSongPlayer } from '../music/songPlayer';
 
 function createSpeaker(speaker: Speaker, avatarSrc: string | undefined): HTMLElement {
   const article = createElement('article', 'speaker');
@@ -32,7 +33,7 @@ function createSpeaker(speaker: Speaker, avatarSrc: string | undefined): HTMLEle
   return article;
 }
 
-function createSongCard(song: WorldSong): HTMLElement {
+function createSongCard(song: WorldSong, src: string): HTMLElement {
   const card = createElement('article', 'record');
   const vinyl = createElement('div', 'vinyl');
   vinyl.setAttribute('aria-hidden', 'true');
@@ -45,11 +46,7 @@ function createSongCard(song: WorldSong): HTMLElement {
     createElement('p', 'record-artist', song.artist),
   );
 
-  const player = createElement('div', 'record-player');
-  player.dataset.youtubeId = song.youtubeId;
-  player.dataset.spotifyTrack = song.spotifyTrackId;
-
-  card.append(vinyl, info, player);
+  card.append(vinyl, info, createSongPlayer(src, song.title, card).element);
   return card;
 }
 
@@ -78,7 +75,8 @@ function createChapter(world: World, lightbox: Lightbox): HTMLElement {
     speakers,
   );
 
-  if (world.song) inner.append(createSongCard(world.song));
+  const songSrc = world.song && namedAudio('canciones', world.song.audio);
+  if (world.song && songSrc) inner.append(createSongCard(world.song, songSrc));
 
   if (wallpapers.length > 0) {
     const gallery = createElement('div', 'gallery');

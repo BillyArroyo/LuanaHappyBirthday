@@ -280,28 +280,12 @@
   color: var(--text-muted);
 }
 
-.record-player {
+.record .song-player {
   grid-column: 1 / -1;
-  aspect-ratio: 16 / 9;
-  border-radius: 12px;
-  overflow: hidden;
-  background: rgba(0, 0, 0, 0.35);
 }
 
-.record-player.is-spotify {
-  aspect-ratio: auto;
-  min-height: 152px;
-}
-
-.record-player iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-.record.is-offline .record-player {
-  display: none;
+.record .song-player__progress {
+  accent-color: var(--chapter-accent);
 }
 
 /* ==================== GALERÍA ==================== */

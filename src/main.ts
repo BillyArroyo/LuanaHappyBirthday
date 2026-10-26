@@ -24,8 +24,8 @@ import { mountIntro } from './features/intro/intro';
 import { renderLetter } from './features/letter/letter';
 import { mountLightbox } from './features/lightbox/lightbox';
 import { mountFavoriteSong } from './features/music/favoriteSong';
-import { mountWorldSongs, type WorldSongPlayers } from './features/music/worldSongs';
-import { mountVoiceMessage, type VoiceMessage } from './features/voice/voiceMessage';
+import { duckSongs, keepOneSongPlaying } from './features/music/playback';
+import { mountVoiceMessage } from './features/voice/voiceMessage';
 import { renderWishes } from './features/wishes/wishes';
 
 const OPENING_CONFETTI_DELAY_MS = 1400;
@@ -34,18 +34,13 @@ function bootstrap(): void {
   const config = birthdayConfig;
   const lightbox = mountLightbox();
 
-  let voice: VoiceMessage | null = null;
-  let worldSongs: WorldSongPlayers | null = null;
-  const song = mountFavoriteSong(config.favoriteSong, {
-    isVoicePlaying: () => voice?.isPlaying() ?? false,
-    onPlay: () => worldSongs?.pauseAll(),
-  });
-  voice = mountVoiceMessage(config.voiceMessage, (isPlaying) => song.duck(isPlaying));
+  const favoriteSong = mountFavoriteSong(config.favoriteSong);
+  const voice = mountVoiceMessage(config.voiceMessage, duckSongs);
+  keepOneSongPlaying();
 
   createStars();
   renderHero(config);
   renderChapters(config.worlds, lightbox);
-  worldSongs = mountWorldSongs(() => song.pause());
   setupCake(config.age, launchConfetti);
   renderWishes(config.wishes);
   renderLuanaGallery(lightbox);
@@ -56,7 +51,7 @@ function bootstrap(): void {
   mountIntro(() => {
     playOpening();
     voice?.play();
-    song.play();
+    favoriteSong?.play();
     window.setTimeout(launchConfetti, OPENING_CONFETTI_DELAY_MS);
   });
 

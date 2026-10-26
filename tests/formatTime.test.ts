@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatTime } from '../src/features/voice/formatTime';
+import { formatTime } from '../src/core/formatTime';
 
 describe('formatTime', () => {
   it('formats seconds as m:ss', () => {

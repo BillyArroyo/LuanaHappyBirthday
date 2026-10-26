@@ -1,14 +1,13 @@
 import { firstAudioIn } from '../../config/localMedia';
 import type { VoiceMessageConfig } from '../../config/types';
 import { createElement, requireElement, setText } from '../../core/dom';
-import { formatTime } from './formatTime';
+import { formatTime } from '../../core/formatTime';
 
 const WAVE_BAR_COUNT = 28;
 const PROGRESS_MAX = 100;
 
 export interface VoiceMessage {
   play(): void;
-  isPlaying(): boolean;
 }
 
 function renderWaveBars(container: HTMLElement): void {
@@ -66,5 +65,5 @@ export function mountVoiceMessage(
   });
 
   section.hidden = false;
-  return { play, isPlaying: () => !audio.paused };
+  return { play };
 }

@@ -6,11 +6,9 @@ export const birthdayConfig: BirthdayConfig = {
   surname: 'Arroyo Ramírez',
   age: 13,
   favoriteSong: {
-    youtubeId: '3yy-dKTmyOo',
-    fallbackYoutubeId: 'jgfaC_SPOqg',
-    originalUrl: 'https://www.youtube.com/watch?v=3yy-dKTmyOo',
+    audio: 'someday',
     title: 'Someday',
-    artist: 'Milo Manheim y Meg Donnelly · ZOMBIES',
+    artist: 'Meg Donnelly y Milo Manheim · ZOMBIES',
   },
 
   voiceMessage: {
@@ -69,8 +67,7 @@ export const birthdayConfig: BirthdayConfig = {
       song: {
         title: 'Birds of a Feather',
         artist: 'Billie Eilish',
-        youtubeId: 'V9PVRfjEBTI',
-        spotifyTrackId: '6dOtVTDdiauQNBQEDOtlAB',
+        audio: 'birds-of-a-feather',
       },
       speakers: [
         {
@@ -90,8 +87,7 @@ export const birthdayConfig: BirthdayConfig = {
       song: {
         title: 'Please Please Please',
         artist: 'Sabrina Carpenter',
-        youtubeId: 'cF1Na4AIecM',
-        spotifyTrackId: '6L24brX1fLRPiMdtOQR3Y7',
+        audio: 'please-please-please',
       },
       speakers: [
         {

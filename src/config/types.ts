@@ -10,8 +10,7 @@ export interface Speaker {
 export interface WorldSong {
   readonly title: string;
   readonly artist: string;
-  readonly youtubeId: string;
-  readonly spotifyTrackId: string;
+  readonly audio: string;
 }
 
 export interface OpeningPanel {
@@ -31,9 +30,7 @@ export interface World {
 }
 
 export interface FavoriteSong {
-  readonly youtubeId: string;
-  readonly fallbackYoutubeId: string;
-  readonly originalUrl: string;
+  readonly audio: string;
   readonly title: string;
   readonly artist: string;
 }

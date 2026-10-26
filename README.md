@@ -11,8 +11,8 @@ Página web de cumpleaños para los 13 años de Luana. Tiene una apertura estilo
 | **Intro** | Regalo para abrir sobre un fondo de backrooms. Zed manda besos animados. Al abrirlo empieza la música y el confeti |
 | **Opening** | Cuatro franjas neón inclinadas, una por mundo, con globos de diálogo, onomatopeyas y el nombre de Luana |
 | **Mensaje de voz** | Reproductor con ondas. Mientras suena, la canción favorita baja de volumen |
-| **Canción favorita** | *Someday* de ZOMBIES completa con el reproductor oficial de YouTube. Arranca al abrir el regalo |
-| **Capítulos** | Un capítulo por mundo con mensajes que se escriben solos, su canción completa lista para reproducir (YouTube dentro de la página) y fondos de pantalla descargables |
+| **Canción favorita** | *Someday* de ZOMBIES completa (MP3 propio). Arranca al abrir el regalo |
+| **Capítulos** | Un capítulo por mundo con mensajes que se escriben solos, su canción completa lista para reproducir (MP3 propio) y fondos de pantalla descargables |
 | **Pastel** | 13 velas que se apagan tocándolas. Al apagarlas todas sale confeti |
 | **Familia** | Mural de fotos tipo polaroid con visor a pantalla completa |
 | **Carta** | Carta final firmada |
@@ -57,32 +57,31 @@ Pon tu grabación en `src/audio/voz/`: un solo archivo `.mp3`, `.m4a`, `.wav`, `
 
 - Muestra la tarjeta **"Mensaje de voz para ti"** debajo de la portada.
 - Lo reproduce solo al abrir el regalo.
-- Baja la canción favorita al 20 % mientras hablas y después la vuelve a subir.
+- Baja las canciones al 20 % mientras hablas y después las vuelve a subir.
 
 Si la carpeta está vacía, la tarjeta no aparece. Usa `.mp3` o `.m4a`, porque `.ogg` no suena en iPhones viejos.
 
 ### Canciones
 
-Todas las canciones suenan completas con el reproductor oficial de YouTube dentro de la página.
+Las canciones son archivos MP3 propios dentro de `src/audio/canciones/` y suenan completas con el reproductor de la página. No usan YouTube ni Spotify.
 
-```ts
-favoriteSong: {
-  youtubeId: '3yy-dKTmyOo',          // video oficial (Disney/VEVO)
-  fallbackYoutubeId: 'jgfaC_SPOqg',  // respaldo: Disney Sing-Alongs
-  originalUrl: 'https://www.youtube.com/watch?v=3yy-dKTmyOo',
-  title: 'Someday',
-  artist: 'Milo Manheim y Meg Donnelly · ZOMBIES',
-},
+```
+src/audio/canciones/
+├── someday.mp3               → canción favorita (arranca al abrir el regalo)
+├── birds-of-a-feather.mp3    → capítulo Billie Eilish
+└── please-please-please.mp3  → capítulo Sabrina Carpenter
 ```
 
-Cada capítulo puede tener `song` con `youtubeId` (video oficial) y `spotifyTrackId` (respaldo).
+En `birthday.config.ts`, cada canción indica su archivo por nombre, sin la extensión:
 
-Las disqueras solo dejan insertar sus videos oficiales en páginas publicadas. En `localhost` YouTube devuelve el error 150, y entonces la página usa el respaldo sola:
+```ts
+favoriteSong: { audio: 'someday', title: 'Someday', artist: '…' },
+song: { title: 'Birds of a Feather', artist: 'Billie Eilish', audio: 'birds-of-a-feather' },
+```
 
-- **Canción favorita:** carga `fallbackYoutubeId`.
-- **Canciones de los capítulos:** muestran el reproductor de Spotify. Con sesión de Spotify suena completa y sin sesión, un adelanto de 30 segundos.
-
-Solo suena una canción a la vez: al darle play a una, las demás se pausan.
+- Solo suena una canción a la vez: al darle play a una, las demás se pausan.
+- Mientras suena el mensaje de voz, las canciones bajan al 20 %.
+- Si falta el archivo, esa tarjeta de canción no aparece.
 
 ## Arquitectura
 
@@ -91,7 +90,9 @@ src/
 ├── config/          # Configuración tipada, índice de fotos y créditos
 ├── core/            # Helpers del DOM
 ├── photos/          # Fotos por sección (se detectan solas con import.meta.glob)
-├── audio/voz/       # Mensaje de voz
+├── audio/
+│   ├── voz/         # Mensaje de voz
+│   └── canciones/   # Canciones en MP3
 ├── features/
 │   ├── cake/        # Pastel y velas
 │   ├── chapters/    # Capítulos por mundo y mensajes que se escriben solos
@@ -103,7 +104,7 @@ src/
 │   ├── intro/       # Pantalla del regalo
 │   ├── letter/      # Carta
 │   ├── lightbox/    # Visor a pantalla completa
-│   ├── music/       # Reproductores de YouTube con respaldo (YouTube Sing-Along / Spotify)
+│   ├── music/       # Reproductor de canciones y control de una canción a la vez
 │   ├── voice/       # Mensaje de voz
 │   └── wishes/      # 13 deseos
 └── styles/          # Estilos por sección y ajustes para celular

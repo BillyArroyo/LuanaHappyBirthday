@@ -27,3 +27,7 @@ export function firstNamedPhoto(folder: string, names: readonly string[]): strin
 export function firstAudioIn(folder: string): string | undefined {
   return firstUrl(audioModules, 'audio', folder);
 }
+
+export function namedAudio(folder: string, name: string): string | undefined {
+  return namedUrl(audioModules, 'audio', folder, name);
+}
