@@ -1,6 +1,6 @@
 # 💚 Luana cumple 13
 
-Página web de cumpleaños para los 13 años de Luana. Tiene una apertura estilo opening de anime con cuatro mundos: **Zombies**, **Descendientes**, **Billie Eilish** y **Sabrina Carpenter**. Incluye mensajes de los personajes que se escriben solos, su canción favorita, un mensaje de voz, el pastel con 13 velas, 13 deseos, un mural de fotos de la familia y una carta.
+Página web de cumpleaños para los 13 años de Luana. Tiene una apertura estilo opening de anime con cinco mundos: **Zombies**, **Descendientes**, **Billie Eilish**, **Sabrina Carpenter** y **Fede Vigevani**. Incluye mensajes de los personajes que se escriben solos, su canción favorita, un mensaje de voz, el pastel con 13 velas, 13 deseos, un mural de fotos de la familia y una carta.
 
 > Página de fan sin afiliación oficial. Los mensajes de artistas reales aparecen como "Si … te escribiera" (dedicatorias de fan). Las fotos de los capítulos vienen de Wikimedia Commons con licencia libre, y sus créditos se muestran en el pie de página.
 
@@ -9,13 +9,14 @@ Página web de cumpleaños para los 13 años de Luana. Tiene una apertura estilo
 | Sección | Qué hace |
 | --- | --- |
 | **Intro** | Regalo para abrir sobre un fondo de backrooms. Zed manda besos animados. Al abrirlo empieza la música y el confeti |
-| **Opening** | Cuatro franjas neón inclinadas, una por mundo, con globos de diálogo, onomatopeyas y el nombre de Luana |
+| **Opening** | Cinco franjas neón inclinadas, una por mundo, con globos de diálogo, onomatopeyas y el nombre de Luana |
 | **Mensaje de voz** | Reproductor con ondas. Mientras suena, la canción favorita baja de volumen |
 | **Canción favorita** | *Someday* de ZOMBIES completa (MP3 propio). Arranca al abrir el regalo |
 | **Capítulos** | Un capítulo por mundo con mensajes que se escriben solos, su canción completa lista para reproducir (MP3 propio) y fondos de pantalla descargables |
 | **Pastel** | 13 velas que se apagan tocándolas. Al apagarlas todas sale confeti |
 | **Familia** | Mural de fotos tipo polaroid con visor a pantalla completa |
 | **Carta** | Carta final firmada |
+| **Foto favorita** | Al final de todo, la foto favorita de su hermano en grande, tipo polaroid |
 
 ## Inicio rápido
 
@@ -41,6 +42,7 @@ src/photos/
 ├── descendientes/  → 01, 02… · mal · evie
 ├── billie/         → 01, 02… · fondo · billie
 ├── sabrina/        → 01, 02… · fondo · sabrina
+├── fede/           → 01, 02… (01 es la franja del opening y 02 su foto de perfil)
 ├── familia/        → 01, 02… mural de la familia
 └── luana/          → retrato (foto de la portada) · 01, 02… galería "Tus mejores momentos"
 ```
@@ -83,6 +85,19 @@ song: { title: 'Birds of a Feather', artist: 'Billie Eilish', audio: 'birds-of-a
 - Mientras suena el mensaje de voz, las canciones bajan al 20 %.
 - Si falta el archivo, esa tarjeta de canción no aparece.
 
+### Videos
+
+Un capítulo puede tener `videoShelf` con videos de YouTube. El de Fede tiene *La saga de los Backrooms*:
+
+```ts
+videoShelf: {
+  title: 'La saga de los Backrooms',
+  videos: [{ youtubeId: '39nyg8-MYtY', title: 'Descubrí la entrada de los Backrooms' }],
+},
+```
+
+Primero se muestra la miniatura y el video se carga solo cuando lo tocan. Al darle play se pausan las canciones.
+
 ## Arquitectura
 
 ```
@@ -99,8 +114,9 @@ src/
 │   ├── credits/     # Créditos de las fotos
 │   ├── effects/     # Estrellas, confeti y animaciones al hacer scroll
 │   ├── family/      # Mural de la familia y galería de Luana
+│   ├── favoritePhoto/ # Foto favorita al final de la página
 │   ├── gallery/     # Botones de foto reutilizables
-│   ├── hero/        # Opening de cuatro franjas
+│   ├── hero/        # Opening de cinco franjas
 │   ├── intro/       # Pantalla del regalo
 │   ├── letter/      # Carta
 │   ├── lightbox/    # Visor a pantalla completa

@@ -174,5 +174,11 @@ export const photoCredits: readonly PhotoCredit[] = [
     "artist": "Reese Brown",
     "license": "Public domain",
     "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sofia_Carson_at_Dress_Rehearsal_for_%22A_Capitol_Fourth%22_Concert_and_Celebration_(cropped).jpg"
+  },
+  {
+    "title": "Fede Vigevani.jpg",
+    "artist": "Carlos Lang",
+    "license": "CC BY 3.0",
+    "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fede_Vigevani.jpg"
   }
 ];

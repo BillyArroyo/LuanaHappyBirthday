@@ -92,6 +92,7 @@
 .strip--descendientes { --strip-color: #d34dff; --strip-deep: #2a0640; }
 .strip--billie { --strip-color: #3fc8ff; --strip-deep: #04224a; }
 .strip--sabrina { --strip-color: #ff5fb4; --strip-deep: #4a0628; }
+.strip--fede { --strip-color: #ff8a1f; --strip-deep: #4a1d02; }
 
 .strip-photo {
   position: absolute;

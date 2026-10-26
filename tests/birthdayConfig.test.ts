@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { birthdayConfig } from '../src/config/birthday.config';
-import { namedAudio } from '../src/config/localMedia';
+import { namedAudio, namedPhoto } from '../src/config/localMedia';
 
 describe('birthdayConfig', () => {
   it('has one wish per year', () => {
@@ -17,6 +17,17 @@ describe('birthdayConfig', () => {
       expect(world.speakers.length).toBeGreaterThan(0);
       world.speakers.forEach((speaker) => expect(speaker.message.trim()).not.toBe(''));
     });
+  });
+
+  it('uses valid YouTube ids for the chapter videos', () => {
+    const videos = birthdayConfig.worlds.flatMap((world) => world.videoShelf?.videos ?? []);
+    expect(videos.length).toBeGreaterThan(0);
+    videos.forEach((video) => expect(video.youtubeId).toMatch(/^[\w-]{11}$/));
+  });
+
+  it('finds the favorite photo', () => {
+    const { folder, photo } = birthdayConfig.favoritePhoto;
+    expect(namedPhoto(folder, photo)).toBeDefined();
   });
 
   it('finds an audio file for every configured song', () => {

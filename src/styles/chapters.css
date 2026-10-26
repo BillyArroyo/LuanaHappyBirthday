@@ -119,6 +119,15 @@
     repeating-conic-gradient(from 0deg at 50% 110%, #ff7ac6 0 6deg, #ff4f9a 6deg 12deg);
 }
 
+.chapter--fede {
+  --chapter-accent: #ff9a3c;
+  --chapter-tint: rgba(60, 25, 5, 0.55);
+  --decor-symbol: "▶";
+  --chapter-fallback:
+    radial-gradient(circle at 75% 25%, rgba(255, 154, 60, 0.4), transparent 50%),
+    linear-gradient(160deg, #3a1704, #140b2e);
+}
+
 /* ==================== MENSAJES ==================== */
 
 .speakers {
@@ -286,6 +295,93 @@
 
 .record .song-player__progress {
   accent-color: var(--chapter-accent);
+}
+
+/* ==================== VIDEOS ==================== */
+
+.video-shelf {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(240px, 72vw, 320px);
+  gap: 1.1rem;
+  overflow-x: auto;
+  padding: 0.5rem 0.25rem 1.25rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: var(--chapter-accent) transparent;
+}
+
+.video-card {
+  scroll-snap-align: start;
+  border: 3px solid var(--chapter-accent);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--night);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.45);
+}
+
+.video-card__poster,
+.video-card__frame {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+.video-card__poster {
+  position: relative;
+  padding: 0;
+  background: #000;
+  cursor: pointer;
+}
+
+.video-card__poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 300ms ease, filter 300ms ease;
+}
+
+.video-card__poster:hover img {
+  transform: scale(1.06);
+  filter: brightness(1.1);
+}
+
+.video-card__poster:focus-visible {
+  outline: 3px solid var(--chapter-accent);
+  outline-offset: -6px;
+}
+
+.video-card__play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 58px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--chapter-accent);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  translate: -50% -50%;
+  transition: scale 200ms var(--ease-bounce);
+}
+
+.video-card__play::after {
+  content: "";
+  position: absolute;
+  inset: 30% 28% 30% 38%;
+  background: var(--ink);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.video-card__poster:hover .video-card__play {
+  scale: 1.12;
+}
+
+.video-card__title {
+  padding: 0.7rem 0.9rem 0.85rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.3;
 }
 
 /* ==================== GALERÍA ==================== */

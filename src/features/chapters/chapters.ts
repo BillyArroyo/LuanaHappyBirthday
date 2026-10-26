@@ -3,7 +3,9 @@ import type { Speaker, World, WorldSong } from '../../config/types';
 import { createElement, requireElement } from '../../core/dom';
 import { renderGallery } from '../gallery/gallery';
 import type { Lightbox } from '../lightbox/lightbox';
+import { pauseSongs } from '../music/playback';
 import { createSongPlayer } from '../music/songPlayer';
+import { createVideoShelf } from './videoShelf';
 
 function createSpeaker(speaker: Speaker, avatarSrc: string | undefined): HTMLElement {
   const article = createElement('article', 'speaker');
@@ -77,6 +79,7 @@ function createChapter(world: World, lightbox: Lightbox): HTMLElement {
 
   const songSrc = world.song && namedAudio('canciones', world.song.audio);
   if (world.song && songSrc) inner.append(createSongCard(world.song, songSrc));
+  if (world.videoShelf) inner.append(...createVideoShelf(world.videoShelf, pauseSongs));
 
   if (wallpapers.length > 0) {
     const gallery = createElement('div', 'gallery');

@@ -98,6 +98,33 @@ export const birthdayConfig: BirthdayConfig = {
         },
       ],
     },
+    {
+      id: 'fede',
+      tag: 'Fede Vigevani',
+      title: 'Si Fede te escribiera…',
+      subtitle: 'Dedicatoria de fan, hecha con cariño.',
+      panel: { bubble: '¡Feliz cumple, Luana!', sfx: '¡JA!', photos: ['01'] },
+      videoShelf: {
+        title: 'La saga de los Backrooms',
+        videos: [
+          { youtubeId: '39nyg8-MYtY', title: 'Descubrí la entrada de los Backrooms' },
+          { youtubeId: 'IZ0OHHDKx5U', title: 'Bajé a los Backrooms' },
+          { youtubeId: 'ZQqAzwEDxmg', title: 'Mi amigo entró a los Backrooms' },
+          { youtubeId: 'Pj_2OIZkucM', title: 'Bajé con vecinos y Club Misterio a los Backrooms' },
+          { youtubeId: 'q6gR0ObaROU', title: 'Conocí los nuevos Backrooms' },
+          { youtubeId: 'PhC4A2eiGfQ', title: 'Encontré una persona viviendo en los Backrooms' },
+          { youtubeId: '4P5ynrpTuQI', title: 'Volví a los Backrooms' },
+        ],
+      },
+      speakers: [
+        {
+          name: 'Fede',
+          role: 'Imaginando su mensaje',
+          photo: '02',
+          message: '¡Holaaa, Luana! Me contaron que hoy cumplís 13 y no podía no pasar a saludarte. Que este año te rías tanto que te duela la panza, que hagas mil videos con tus amigas y que nunca te dé vergüenza ser como sos. ¡Feliz cumple!',
+        },
+      ],
+    },
   ],
 
   wishes: [
@@ -130,5 +157,13 @@ export const birthdayConfig: BirthdayConfig = {
       'Quiero que sepas que siempre voy a estar para ti, en los días bonitos y en los que no tanto. Disfruta tu día al máximo, te lo mereces.',
     ],
     signature: 'Tu hermano, Billy',
+  },
+
+  favoritePhoto: {
+    folder: 'familia',
+    photo: '07',
+    kicker: 'Mi foto favorita',
+    title: 'La foto favorita de tu hermano',
+    caption: 'Esta sonrisa es mi foto favorita de todas. Nunca la pierdas, Luana.',
   },
 };

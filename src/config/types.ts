@@ -1,4 +1,4 @@
-export type WorldId = 'zombies' | 'descendientes' | 'billie' | 'sabrina';
+export type WorldId = 'zombies' | 'descendientes' | 'billie' | 'sabrina' | 'fede';
 
 export interface Speaker {
   readonly name: string;
@@ -11,6 +11,16 @@ export interface WorldSong {
   readonly title: string;
   readonly artist: string;
   readonly audio: string;
+}
+
+export interface WorldVideo {
+  readonly youtubeId: string;
+  readonly title: string;
+}
+
+export interface VideoShelf {
+  readonly title: string;
+  readonly videos: readonly WorldVideo[];
 }
 
 export interface OpeningPanel {
@@ -26,6 +36,7 @@ export interface World {
   readonly subtitle: string;
   readonly panel: OpeningPanel;
   readonly song?: WorldSong;
+  readonly videoShelf?: VideoShelf;
   readonly speakers: readonly Speaker[];
 }
 
@@ -52,6 +63,14 @@ export interface LetterConfig {
   readonly signature: string;
 }
 
+export interface FavoritePhotoConfig {
+  readonly folder: string;
+  readonly photo: string;
+  readonly kicker: string;
+  readonly title: string;
+  readonly caption: string;
+}
+
 export interface BirthdayConfig {
   readonly name: string;
   readonly secondName: string;
@@ -63,6 +82,7 @@ export interface BirthdayConfig {
   readonly wishes: readonly string[];
   readonly family: FamilyConfig;
   readonly letter: LetterConfig;
+  readonly favoritePhoto: FavoritePhotoConfig;
 }
 
 export interface PhotoCredit {

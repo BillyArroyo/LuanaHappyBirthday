@@ -21,3 +21,7 @@ export function duckSongs(shouldDuck: boolean): void {
     song.volume = shouldDuck ? DUCKED_VOLUME : FULL_VOLUME;
   });
 }
+
+export function pauseSongs(): void {
+  songs().forEach((song) => song.pause());
+}

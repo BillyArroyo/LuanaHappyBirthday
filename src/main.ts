@@ -6,6 +6,7 @@ import './styles/cake.css';
 import './styles/wishes.css';
 import './styles/family.css';
 import './styles/letter.css';
+import './styles/favorite-photo.css';
 import './styles/hero.css';
 import './styles/chapters.css';
 import './styles/mobile.css';
@@ -19,6 +20,7 @@ import { observeTypedMessages } from './features/chapters/typing';
 import { renderCredits } from './features/credits/credits';
 import { createStars, launchConfetti, observeReveals } from './features/effects/effects';
 import { renderFamily, renderLuanaGallery } from './features/family/family';
+import { renderFavoritePhoto } from './features/favoritePhoto/favoritePhoto';
 import { playOpening, renderHero } from './features/hero/hero';
 import { mountIntro } from './features/intro/intro';
 import { renderLetter } from './features/letter/letter';
@@ -46,6 +48,7 @@ function bootstrap(): void {
   renderLuanaGallery(lightbox);
   renderFamily(config.family, lightbox);
   renderLetter(config.letter);
+  renderFavoritePhoto(config.favoritePhoto, lightbox);
   renderCredits(photoCredits);
 
   mountIntro(() => {
