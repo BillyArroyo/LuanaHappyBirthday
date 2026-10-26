@@ -11,8 +11,8 @@ Página web de cumpleaños para los 13 años de Luana. Tiene una apertura estilo
 | **Intro** | Regalo para abrir sobre un fondo de backrooms. Zed manda besos animados. Al abrirlo empieza la música y el confeti |
 | **Opening** | Cuatro franjas neón inclinadas, una por mundo, con globos de diálogo, onomatopeyas y el nombre de Luana |
 | **Mensaje de voz** | Reproductor con ondas. Mientras suena, la canción favorita baja de volumen |
-| **Canción favorita** | *Someday* de ZOMBIES con el reproductor oficial de YouTube. Arranca al abrir el regalo |
-| **Capítulos** | Un capítulo por mundo con mensajes que se escriben solos, su canción lista para reproducir (Spotify dentro de la página) y fondos de pantalla descargables |
+| **Canción favorita** | *Someday* de ZOMBIES completa con el reproductor oficial de YouTube. Arranca al abrir el regalo |
+| **Capítulos** | Un capítulo por mundo con mensajes que se escriben solos, su canción completa lista para reproducir (YouTube dentro de la página) y fondos de pantalla descargables |
 | **Pastel** | 13 velas que se apagan tocándolas. Al apagarlas todas sale confeti |
 | **Familia** | Mural de fotos tipo polaroid con visor a pantalla completa |
 | **Carta** | Carta final firmada |
@@ -61,26 +61,28 @@ Pon tu grabación en `src/audio/voz/`: un solo archivo `.mp3`, `.m4a`, `.wav`, `
 
 Si la carpeta está vacía, la tarjeta no aparece. Usa `.mp3` o `.m4a`, porque `.ogg` no suena en iPhones viejos.
 
-### Canción favorita
+### Canciones
 
-Se configura en `favoriteSong`:
+Todas las canciones suenan completas con el reproductor oficial de YouTube dentro de la página.
 
 ```ts
 favoriteSong: {
-  youtubeId: 'jgfaC_SPOqg',
+  youtubeId: '3yy-dKTmyOo',          // video oficial (Disney/VEVO)
+  fallbackYoutubeId: 'jgfaC_SPOqg',  // respaldo: Disney Sing-Alongs
   originalUrl: 'https://www.youtube.com/watch?v=3yy-dKTmyOo',
   title: 'Someday',
   artist: 'Milo Manheim y Meg Donnelly · ZOMBIES',
 },
 ```
 
-`youtubeId` tiene que ser un video que **permita insertarse** en otras páginas. El video oficial de DisneyMusicVEVO no lo permite (YouTube devuelve el error 150), por eso se usa la versión *Disney Sing-Alongs* del canal Disney Music. `originalUrl` es el enlace del botón "Abrir en YouTube".
+Cada capítulo puede tener `song` con `youtubeId` (video oficial) y `spotifyTrackId` (respaldo).
 
-### Canciones de los capítulos
+Las disqueras solo dejan insertar sus videos oficiales en páginas publicadas. En `localhost` YouTube devuelve el error 150, y entonces la página usa el respaldo sola:
 
-Cada mundo puede tener `song` con `spotifyTrackId`, que es el código que va después de `open.spotify.com/track/`. Se reproduce con el reproductor de Spotify dentro de la página. Quien tiene sesión de Spotify abierta escucha la canción completa y quien no, un adelanto de 30 segundos. Solo suena una canción a la vez: al darle play a una, las demás se pausan.
+- **Canción favorita:** carga `fallbackYoutubeId`.
+- **Canciones de los capítulos:** muestran el reproductor de Spotify. Con sesión de Spotify suena completa y sin sesión, un adelanto de 30 segundos.
 
-No se usa YouTube para estas canciones porque los videos oficiales de Billie Eilish y Sabrina Carpenter no permiten insertarse en otras páginas (error 150).
+Solo suena una canción a la vez: al darle play a una, las demás se pausan.
 
 ## Arquitectura
 
@@ -101,7 +103,7 @@ src/
 │   ├── intro/       # Pantalla del regalo
 │   ├── letter/      # Carta
 │   ├── lightbox/    # Visor a pantalla completa
-│   ├── music/       # Canción favorita (YouTube) y canciones de los capítulos (Spotify)
+│   ├── music/       # Reproductores de YouTube con respaldo (YouTube Sing-Along / Spotify)
 │   ├── voice/       # Mensaje de voz
 │   └── wishes/      # 13 deseos
 └── styles/          # Estilos por sección y ajustes para celular

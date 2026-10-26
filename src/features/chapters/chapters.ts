@@ -46,6 +46,7 @@ function createSongCard(song: WorldSong): HTMLElement {
   );
 
   const player = createElement('div', 'record-player');
+  player.dataset.youtubeId = song.youtubeId;
   player.dataset.spotifyTrack = song.spotifyTrackId;
 
   card.append(vinyl, info, player);

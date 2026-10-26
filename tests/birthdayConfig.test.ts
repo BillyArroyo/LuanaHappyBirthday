@@ -18,14 +18,18 @@ describe('birthdayConfig', () => {
     });
   });
 
-  it('uses valid Spotify track ids for the chapter songs', () => {
+  it('gives every chapter song a YouTube video and a Spotify fallback', () => {
     const songs = birthdayConfig.worlds.flatMap((world) => (world.song ? [world.song] : []));
     expect(songs.length).toBeGreaterThan(0);
-    songs.forEach((song) => expect(song.spotifyTrackId).toMatch(/^[0-9A-Za-z]{22}$/));
+    songs.forEach((song) => {
+      expect(song.youtubeId).toMatch(/^[\w-]{11}$/);
+      expect(song.spotifyTrackId).toMatch(/^[0-9A-Za-z]{22}$/);
+    });
   });
 
   it('points the favorite song to YouTube', () => {
     expect(birthdayConfig.favoriteSong.youtubeId).toMatch(/^[\w-]{11}$/);
+    expect(birthdayConfig.favoriteSong.fallbackYoutubeId).toMatch(/^[\w-]{11}$/);
     expect(birthdayConfig.favoriteSong.originalUrl).toMatch(/^https:\/\/www\.youtube\.com\//);
   });
 });

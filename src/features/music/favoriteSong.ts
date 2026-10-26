@@ -39,6 +39,16 @@ export function mountFavoriteSong(song: FavoriteSong, { isVoicePlaying, onPlay }
   };
 
   const markOffline = (): void => section.classList.add('is-offline');
+  let isUsingFallback = false;
+
+  const switchToFallback = (failedPlayer: YouTubePlayer): void => {
+    if (isUsingFallback) {
+      markOffline();
+      return;
+    }
+    isUsingFallback = true;
+    failedPlayer.loadVideoById(song.fallbackYoutubeId);
+  };
 
   loadYouTubeApi()
     .then((YT) => {
@@ -54,7 +64,7 @@ export function mountFavoriteSong(song: FavoriteSong, { isVoicePlaying, onPlay }
           onStateChange: (event) => {
             if (event.data === YOUTUBE_STATE_PLAYING) onPlay();
           },
-          onError: markOffline,
+          onError: (event) => switchToFallback(event.target),
         },
       });
     })

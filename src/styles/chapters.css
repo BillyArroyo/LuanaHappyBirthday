@@ -282,16 +282,26 @@
 
 .record-player {
   grid-column: 1 / -1;
-  min-height: 152px;
+  aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.35);
 }
 
+.record-player.is-spotify {
+  aspect-ratio: auto;
+  min-height: 152px;
+}
+
 .record-player iframe {
   display: block;
   width: 100%;
+  height: 100%;
   border: 0;
+}
+
+.record.is-offline .record-player {
+  display: none;
 }
 
 /* ==================== GALERÍA ==================== */

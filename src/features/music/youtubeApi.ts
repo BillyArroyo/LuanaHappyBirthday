@@ -5,6 +5,7 @@ export const YOUTUBE_STATE_PLAYING = 1;
 export interface YouTubePlayer {
   playVideo(): void;
   pauseVideo(): void;
+  loadVideoById(videoId: string): void;
   setVolume(volume: number): void;
 }
 
@@ -22,7 +23,7 @@ interface YouTubePlayerOptions {
   readonly events?: {
     readonly onReady?: (event: YouTubePlayerEvent) => void;
     readonly onStateChange?: (event: YouTubeStateChangeEvent) => void;
-    readonly onError?: () => void;
+    readonly onError?: (event: YouTubePlayerEvent) => void;
   };
 }
 

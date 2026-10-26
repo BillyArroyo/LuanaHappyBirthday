@@ -1,5 +1,6 @@
 import { createElement } from '../../core/dom';
-import { loadSpotifyApi, type SpotifyController } from './spotifyApi';
+import { loadSpotifyApi } from './spotifyApi';
+import { loadYouTubeApi, YOUTUBE_STATE_PLAYING } from './youtubeApi';
 
 const SPOTIFY_PLAYER_HEIGHT = 152;
 
@@ -7,52 +8,84 @@ export interface WorldSongPlayers {
   pauseAll(): void;
 }
 
-function mountFallbackEmbed(slot: HTMLElement, trackId: string): void {
-  const iframe = createElement('iframe');
-  iframe.src = `https://open.spotify.com/embed/track/${trackId}`;
-  iframe.height = String(SPOTIFY_PLAYER_HEIGHT);
-  iframe.loading = 'lazy';
-  iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
-  iframe.title = 'Reproductor de Spotify';
-  slot.replaceChildren(iframe);
+interface SongSlot {
+  readonly element: HTMLElement;
+  readonly card: Element | null;
+  readonly youtubeId: string;
+  readonly spotifyTrackId: string;
+}
+
+type Pause = () => void;
+
+function readSlots(): SongSlot[] {
+  return Array.from(document.querySelectorAll<HTMLElement>('[data-youtube-id]')).map((element) => ({
+    element,
+    card: element.closest('.record'),
+    youtubeId: element.dataset.youtubeId ?? '',
+    spotifyTrackId: element.dataset.spotifyTrack ?? '',
+  }));
 }
 
 export function mountWorldSongs(onSongPlay: () => void): WorldSongPlayers {
-  const controllers: SpotifyController[] = [];
-  const slots = Array.from(document.querySelectorAll<HTMLElement>('[data-spotify-track]'));
+  const pausers = new Set<Pause>();
 
-  const pauseOthers = (current: SpotifyController): void => {
-    controllers.filter((controller) => controller !== current).forEach((controller) => controller.pause());
+  const handlePlaying = (slot: SongSlot, current: Pause, isPlaying: boolean): void => {
+    slot.card?.classList.toggle('is-playing', isPlaying);
+    if (!isPlaying) return;
+    pausers.forEach((pause) => {
+      if (pause !== current) pause();
+    });
+    onSongPlay();
   };
 
-  loadSpotifyApi()
-    .then((api) => {
-      slots.forEach((slot) => {
-        const trackId = slot.dataset.spotifyTrack ?? '';
-        const card = slot.closest('.record');
-        const target = createElement('div');
-        slot.replaceChildren(target);
-
+  const mountSpotify = (slot: SongSlot): void => {
+    slot.element.classList.add('is-spotify');
+    const target = createElement('div');
+    slot.element.replaceChildren(target);
+    loadSpotifyApi()
+      .then((api) => {
         api.createController(
           target,
-          { uri: `spotify:track:${trackId}`, width: '100%', height: SPOTIFY_PLAYER_HEIGHT },
+          { uri: `spotify:track:${slot.spotifyTrackId}`, width: '100%', height: SPOTIFY_PLAYER_HEIGHT },
           (controller) => {
-            controllers.push(controller);
-            controller.addListener('playback_update', ({ data }) => {
-              card?.classList.toggle('is-playing', !data.isPaused);
-              if (data.isPaused) return;
-              pauseOthers(controller);
-              onSongPlay();
-            });
+            const pause: Pause = () => controller.pause();
+            pausers.add(pause);
+            controller.addListener('playback_update', ({ data }) => handlePlaying(slot, pause, !data.isPaused));
           },
         );
-      });
-    })
-    .catch(() => {
-      slots.forEach((slot) => mountFallbackEmbed(slot, slot.dataset.spotifyTrack ?? ''));
-    });
+      })
+      .catch(() => slot.card?.classList.add('is-offline'));
+  };
+
+  const mountYouTube = (slot: SongSlot): void => {
+    const target = createElement('div');
+    target.id = `song-${slot.youtubeId}`;
+    slot.element.replaceChildren(target);
+    loadYouTubeApi()
+      .then((YT) => {
+        let pause: Pause = () => undefined;
+        new YT.Player(target.id, {
+          videoId: slot.youtubeId,
+          playerVars: { rel: 0, playsinline: 1 },
+          events: {
+            onReady: ({ target: player }) => {
+              pause = () => player.pauseVideo();
+              pausers.add(pause);
+            },
+            onStateChange: ({ data }) => handlePlaying(slot, pause, data === YOUTUBE_STATE_PLAYING),
+            onError: () => {
+              pausers.delete(pause);
+              mountSpotify(slot);
+            },
+          },
+        });
+      })
+      .catch(() => mountSpotify(slot));
+  };
+
+  readSlots().forEach(mountYouTube);
 
   return {
-    pauseAll: () => controllers.forEach((controller) => controller.pause()),
+    pauseAll: () => pausers.forEach((pause) => pause()),
   };
 }
